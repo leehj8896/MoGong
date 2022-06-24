@@ -24,6 +24,9 @@ class MainViewController: UIViewController, MainDisplayLogic
   var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
   
   let headerView = UIView()
+  let bodyView = UIScrollView()
+  let contentView = UIView()
+  let footerView = UIView()
   let logoView = UIView()
   let settingView = UIView()
   let searchView = UIView()
@@ -33,9 +36,9 @@ class MainViewController: UIViewController, MainDisplayLogic
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     return collectionView
   }()
-  let spaceTableView = UITableView()
-  let clubTableView = UITableView()
-  let talkTableView = UITableView()
+  let spaceTableView = UIStackView()
+  let clubTableView = UIStackView()
+  let talkTableView = UIStackView()
   
   final let scrollViewCellID = "ScrollViewCell"
   final let tableViewCellID = "TableViewCell"
@@ -88,6 +91,8 @@ class MainViewController: UIViewController, MainDisplayLogic
   {
     super.viewDidLoad()
     self.setupHeaderView()
+    self.setupFooterView()
+    self.setupBodyView()
     self.setupScrollView()
     self.setupSpaceTableView()
     self.setupClubTableView()
@@ -132,55 +137,74 @@ class MainViewController: UIViewController, MainDisplayLogic
     }
   }
   
+  private func setupFooterView() {
+    self.footerView.backgroundColor = .magenta
+    self.view.addSubview(self.footerView)
+    self.footerView.snp.makeConstraints { make in
+      make.bottom.left.right.equalTo(self.view.safeAreaLayoutGuide)
+      make.height.equalTo(100)
+    }
+  }
+  
+  private func setupBodyView() {
+    self.bodyView.backgroundColor = .purple
+    self.bodyView.contentSize = CGSize(width: self.view.frame.width, height: 2000)
+    self.view.addSubview(self.bodyView)
+    self.bodyView.snp.makeConstraints { make in
+      make.top.equalTo(self.headerView.snp.bottom)
+      make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+      make.bottom.equalTo(self.footerView.snp.top)
+    }
+    
+    contentView.backgroundColor = .darkGray
+    self.bodyView.addSubview(contentView)
+    contentView.snp.makeConstraints { make in
+      make.width.centerX.equalToSuperview()
+      make.top.bottom.equalToSuperview()
+    }
+  }
+  
   private func setupScrollView() {
     self.scrollView.delegate = self
     self.scrollView.dataSource = self
     self.scrollView.backgroundColor = .green
     self.scrollView.register(ScrollViewCell.self, forCellWithReuseIdentifier: scrollViewCellID)
-    self.view.addSubview(self.scrollView)
+    self.contentView.addSubview(self.scrollView)
     self.scrollView.snp.makeConstraints { make in
-      make.top.equalTo(self.headerView.snp.bottom).offset(20)
-      make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+      make.top.equalToSuperview()
+      make.left.right.equalToSuperview()
       make.height.equalTo(150)
     }
   }
   
   private func setupSpaceTableView() {
-    self.spaceTableView.delegate = self
-    self.spaceTableView.dataSource = self
     self.spaceTableView.backgroundColor = .brown
-    self.spaceTableView.register(TableViewCell.self, forCellReuseIdentifier: tableViewCellID)
-    self.view.addSubview(self.spaceTableView)
+    self.contentView.addSubview(self.spaceTableView)
     self.spaceTableView.snp.makeConstraints { make in
       make.top.equalTo(self.scrollView.snp.bottom).offset(10)
-      make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+      make.width.equalToSuperview()
       make.height.equalTo(150)
     }
   }
   
   private func setupClubTableView() {
-    self.clubTableView.delegate = self
-    self.clubTableView.dataSource = self
     self.clubTableView.backgroundColor = .cyan
-    self.clubTableView.register(TableViewCell.self, forCellReuseIdentifier: tableViewCellID)
-    self.view.addSubview(self.clubTableView)
+    self.contentView.addSubview(self.clubTableView)
     self.clubTableView.snp.makeConstraints { make in
       make.top.equalTo(self.spaceTableView.snp.bottom).offset(10)
-      make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+      make.width.equalToSuperview()
       make.height.equalTo(150)
     }
   }
-  
+
   private func setupTalkTableView() {
-    self.talkTableView.delegate = self
-    self.talkTableView.dataSource = self
-    self.talkTableView.backgroundColor = .darkGray
-    self.talkTableView.register(TableViewCell.self, forCellReuseIdentifier: tableViewCellID)
-    self.view.addSubview(self.talkTableView)
+    self.talkTableView.backgroundColor = .orange
+    self.contentView.addSubview(self.talkTableView)
     self.talkTableView.snp.makeConstraints { make in
       make.top.equalTo(self.clubTableView.snp.bottom).offset(10)
-      make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+      make.width.equalToSuperview()
       make.height.equalTo(150)
+      make.bottom.equalToSuperview()
     }
   }
 
@@ -198,6 +222,10 @@ class MainViewController: UIViewController, MainDisplayLogic
   }
 }
 
+extension MainViewController: UIScrollViewDelegate {
+//  scrollview
+}
+
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 5
@@ -211,17 +239,5 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 120, height: 120)
-  }
-}
-
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 5
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = self.spaceTableView.dequeueReusableCell(withIdentifier: tableViewCellID, for: indexPath)
-    cell.backgroundColor = .clear
-    return cell
   }
 }
