@@ -36,9 +36,9 @@ class MainViewController: UIViewController, MainDisplayLogic
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     return collectionView
   }()
-  let spaceTableView = UIStackView()
-  let clubTableView = UIStackView()
-  let talkTableView = UIStackView()
+  let spaceView = UIStackView()
+  let clubView = UIStackView()
+  let talkView = UIStackView()
   
   final let scrollViewCellID = "ScrollViewCell"
   final let tableViewCellID = "TableViewCell"
@@ -94,9 +94,9 @@ class MainViewController: UIViewController, MainDisplayLogic
     self.setupFooterView()
     self.setupBodyView()
     self.setupScrollView()
-    self.setupSpaceTableView()
-    self.setupClubTableView()
-    self.setupTalkTableView()
+    self.setupSpaceView()
+    self.setupClubView()
+    self.setupTalkView()
     
     doSomething()
   }
@@ -177,34 +177,109 @@ class MainViewController: UIViewController, MainDisplayLogic
     }
   }
   
-  private func setupSpaceTableView() {
-    self.spaceTableView.backgroundColor = .brown
-    self.contentView.addSubview(self.spaceTableView)
-    self.spaceTableView.snp.makeConstraints { make in
+  private func setupSpaceView() {
+    self.spaceView.backgroundColor = .brown
+    self.spaceView.distribution = .equalSpacing
+    self.spaceView.axis = .vertical
+    self.spaceView.isLayoutMarginsRelativeArrangement = true
+    self.spaceView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+    
+    self.contentView.addSubview(self.spaceView)
+    self.spaceView.snp.makeConstraints { make in
       make.top.equalTo(self.scrollView.snp.bottom).offset(10)
       make.width.equalToSuperview()
       make.height.equalTo(150)
     }
+    
+    for i in 1...5 {
+      let row = UIView()
+      let category = UILabel()
+      category.text = "종류\(i)"
+      row.addSubview(category)
+      category.snp.makeConstraints { make in
+        make.centerY.equalToSuperview()
+        make.left.equalToSuperview().offset(20)
+        make.width.equalTo(50)
+      }
+      let title = UILabel()
+      title.text = "글제목\(i) 글제목\(i) 글제목\(i) 글제목\(i)"
+      row.addSubview(title)
+      title.snp.makeConstraints { make in
+        make.centerY.equalToSuperview()
+        make.left.equalTo(category.snp.right).offset(20)
+      }
+      spaceView.addArrangedSubview(row)
+    }
   }
   
-  private func setupClubTableView() {
-    self.clubTableView.backgroundColor = .cyan
-    self.contentView.addSubview(self.clubTableView)
-    self.clubTableView.snp.makeConstraints { make in
-      make.top.equalTo(self.spaceTableView.snp.bottom).offset(10)
+  private func setupClubView() {
+    self.clubView.backgroundColor = .cyan
+    self.clubView.distribution = .equalSpacing
+    self.clubView.axis = .vertical
+    self.clubView.isLayoutMarginsRelativeArrangement = true
+    self.clubView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+    
+    self.contentView.addSubview(self.clubView)
+    self.clubView.snp.makeConstraints { make in
+      make.top.equalTo(self.spaceView.snp.bottom).offset(10)
       make.width.equalToSuperview()
       make.height.equalTo(150)
     }
+    
+    for i in 1...5 {
+      let row = UIView()
+      let category = UILabel()
+      category.text = "종류\(i)"
+      row.addSubview(category)
+      category.snp.makeConstraints { make in
+        make.centerY.equalToSuperview()
+        make.left.equalToSuperview().offset(20)
+        make.width.equalTo(50)
+      }
+      let title = UILabel()
+      title.text = "글제목\(i) 글제목\(i) 글제목\(i) 글제목\(i)"
+      row.addSubview(title)
+      title.snp.makeConstraints { make in
+        make.centerY.equalToSuperview()
+        make.left.equalTo(category.snp.right).offset(20)
+      }
+      clubView.addArrangedSubview(row)
+    }
   }
 
-  private func setupTalkTableView() {
-    self.talkTableView.backgroundColor = .orange
-    self.contentView.addSubview(self.talkTableView)
-    self.talkTableView.snp.makeConstraints { make in
-      make.top.equalTo(self.clubTableView.snp.bottom).offset(10)
+  private func setupTalkView() {
+    self.talkView.backgroundColor = .orange
+    self.talkView.distribution = .equalSpacing
+    self.talkView.axis = .vertical
+    self.talkView.isLayoutMarginsRelativeArrangement = true
+    self.talkView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+
+    self.contentView.addSubview(self.talkView)
+    self.talkView.snp.makeConstraints { make in
+      make.top.equalTo(self.clubView.snp.bottom).offset(10)
       make.width.equalToSuperview()
       make.height.equalTo(150)
       make.bottom.equalToSuperview()
+    }
+    
+    for i in 1...5 {
+      let row = UIView()
+      let category = UILabel()
+      category.text = "종류\(i)"
+      row.addSubview(category)
+      category.snp.makeConstraints { make in
+        make.centerY.equalToSuperview()
+        make.left.equalToSuperview().offset(20)
+        make.width.equalTo(50)
+      }
+      let title = UILabel()
+      title.text = "글제목\(i) 글제목\(i) 글제목\(i) 글제목\(i)"
+      row.addSubview(title)
+      title.snp.makeConstraints { make in
+        make.centerY.equalToSuperview()
+        make.left.equalTo(category.snp.right).offset(20)
+      }
+      talkView.addArrangedSubview(row)
     }
   }
 
