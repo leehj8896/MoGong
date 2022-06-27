@@ -30,7 +30,7 @@ class MainViewController: UIViewController, MainDisplayLogic
   let logoView = UIView()
   let settingView = UIView()
   let searchView = UIView()
-  let scrollView: UICollectionView = {
+  let cardView: UICollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = .horizontal
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -93,7 +93,7 @@ class MainViewController: UIViewController, MainDisplayLogic
     self.setupHeaderView()
     self.setupFooterView()
     self.setupBodyView()
-    self.setupScrollView()
+    self.setupCardView()
     self.setupSpaceView()
     self.setupClubView()
     self.setupTalkView()
@@ -185,13 +185,13 @@ class MainViewController: UIViewController, MainDisplayLogic
     }
   }
   
-  private func setupScrollView() {
-    self.scrollView.delegate = self
-    self.scrollView.dataSource = self
-    self.scrollView.backgroundColor = .green
-    self.scrollView.register(ScrollViewCell.self, forCellWithReuseIdentifier: scrollViewCellID)
-    self.contentView.addSubview(self.scrollView)
-    self.scrollView.snp.makeConstraints { make in
+  private func setupCardView() {
+    self.cardView.delegate = self
+    self.cardView.dataSource = self
+    self.cardView.backgroundColor = .green
+    self.cardView.register(CardViewCell.self, forCellWithReuseIdentifier: scrollViewCellID)
+    self.contentView.addSubview(self.cardView)
+    self.cardView.snp.makeConstraints { make in
       make.top.equalToSuperview()
       make.left.right.equalToSuperview()
       make.height.equalTo(150)
@@ -207,7 +207,7 @@ class MainViewController: UIViewController, MainDisplayLogic
     
     self.contentView.addSubview(self.spaceView)
     self.spaceView.snp.makeConstraints { make in
-      make.top.equalTo(self.scrollView.snp.bottom).offset(10)
+      make.top.equalTo(self.cardView.snp.bottom).offset(10)
       make.width.equalToSuperview()
       make.height.equalTo(150)
     }
@@ -328,7 +328,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = self.scrollView.dequeueReusableCell(withReuseIdentifier: scrollViewCellID, for: indexPath)
+    let cell = self.cardView.dequeueReusableCell(withReuseIdentifier: scrollViewCellID, for: indexPath)
     cell.backgroundColor = .gray
     return cell
   }

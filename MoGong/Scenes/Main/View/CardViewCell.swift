@@ -7,6 +7,6 @@
 
 import UIKit
 
-class ScrollViewCell: UICollectionViewCell {
+class CardViewCell: UICollectionViewCell {
     
 }
