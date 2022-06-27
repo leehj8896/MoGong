@@ -26,7 +26,7 @@ class MainViewController: UIViewController, MainDisplayLogic
   let headerView = UIView()
   let bodyView = UIScrollView()
   let contentView = UIView()
-  let footerView = UIView()
+  let footerView = UIStackView()
   let logoView = UIView()
   let settingView = UIView()
   let searchView = UIView()
@@ -139,10 +139,31 @@ class MainViewController: UIViewController, MainDisplayLogic
   
   private func setupFooterView() {
     self.footerView.backgroundColor = .magenta
+    self.footerView.axis = .horizontal
+    self.footerView.distribution = .equalSpacing
+    self.footerView.isLayoutMarginsRelativeArrangement = true
+    self.footerView.layoutMargins = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
+    
     self.view.addSubview(self.footerView)
     self.footerView.snp.makeConstraints { make in
       make.bottom.left.right.equalTo(self.view.safeAreaLayoutGuide)
-      make.height.equalTo(100)
+      make.height.equalTo(60)
+    }
+    
+    for i in 1...3 {
+      let button = UIView()
+      button.backgroundColor = .red
+      self.footerView.addArrangedSubview(button)
+      button.snp.makeConstraints { make in
+        make.width.equalTo(50)
+      }
+      
+      let label = UILabel()
+      label.text = "버튼\(i)"
+      button.addSubview(label)
+      label.snp.makeConstraints { make in
+        make.centerX.centerY.equalToSuperview()
+      }
     }
   }
   
