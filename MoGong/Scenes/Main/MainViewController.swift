@@ -142,7 +142,7 @@ class MainViewController: UIViewController, MainDisplayLogic
     self.footerView.axis = .horizontal
     self.footerView.distribution = .equalSpacing
     self.footerView.isLayoutMarginsRelativeArrangement = true
-    self.footerView.layoutMargins = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
+    self.footerView.layoutMargins = UIEdgeInsets(top: 10, left: 50, bottom: 10, right: 50)
     
     self.view.addSubview(self.footerView)
     self.footerView.snp.makeConstraints { make in
