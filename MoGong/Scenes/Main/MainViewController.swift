@@ -21,7 +21,8 @@ protocol MainDisplayLogic: class
 class MainViewController: UIViewController, MainDisplayLogic
 {
   var interactor: MainBusinessLogic?
-  var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
+//  var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
+	var router: MainRouter?
   
   let headerView = UIView()
   let bodyView = UIScrollView()
@@ -126,6 +127,19 @@ class MainViewController: UIViewController, MainDisplayLogic
       make.centerY.equalToSuperview()
       make.right.equalToSuperview().offset(-20)
     }
+    let tempLabel = UILabel()
+    tempLabel.text = "설정"
+    self.settingView.addSubview(tempLabel)
+    tempLabel.snp.makeConstraints { make in
+      make.centerX.centerY.equalToSuperview()
+    }
+    
+    self.settingView.addGestureRecognizer(
+      UITapGestureRecognizer(
+        target: self,
+        action: #selector(self.handleTapJoin)
+      )
+    )
     
     // 검색
     self.searchView.backgroundColor = .blue
@@ -135,6 +149,10 @@ class MainViewController: UIViewController, MainDisplayLogic
       make.centerY.equalToSuperview()
       make.right.equalTo(self.settingView.snp.left).offset(-20)
     }
+  }
+  
+  @objc private func handleTapJoin() {
+		self.router?.routeToJoin()
   }
   
   private func setupFooterView() {

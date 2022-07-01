@@ -28,33 +28,38 @@ class MainRouter: NSObject, MainRoutingLogic, MainDataPassing
   var dataStore: MainDataStore?
   
   // MARK: Routing
+	func routeToJoin() {
+		guard let vc = self.viewController?.storyboard?.instantiateViewController(withIdentifier: "Join") else { return }
+		vc.modalPresentationStyle = .fullScreen
+		self.viewController?.present(vc, animated: true)
+	}
   
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
+//  func routeToSomewhere(segue: UIStoryboardSegue?)
+//  {
+//    if let segue = segue {
+//      let destinationVC = segue.destination as! JoinViewController
+//      var destinationDS = destinationVC.router!.dataStore!
+//      passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+//    } else {
+//      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//      let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! JoinViewController
+//      var destinationDS = destinationVC.router!.dataStore!
+//      passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+//      navigateToSomewhere(source: viewController!, destination: destinationVC)
+//    }
+//  }
 
   // MARK: Navigation
   
-  //func navigateToSomewhere(source: MainViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
+//  func navigateToSomewhere(source: MainViewController, destination: JoinViewController)
+//  {
+//    source.show(destination, sender: nil)
+//  }
   
   // MARK: Passing data
   
-  //func passDataToSomewhere(source: MainDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+//  func passDataToSomewhere(source: MainDataStore, destination: inout JoinDataStore)
+//  {
+////    destination.name = source.name
+//  }
 }
